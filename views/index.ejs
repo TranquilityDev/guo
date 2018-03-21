@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<!--
+     _____     __ __                   _____________
+    /__  /____/ // /____  ____ ___  _<  / <  /__  /_  __
+     / / ___/ // /_/ __ \/ __ `/ / / / / // /  / / / / /
+    / / /  /__  __/ / / / /_/ / /_/ / / // /  / / /_/ /
+   /_/_/     /_/ /_/ /_/\__, /\__,_/_/_//_/  /_/\__, /
+                          /_/                  /____/
+-->
+<html lang="en">
+
+<head>
+    <!--    Common     -->
+    <meta charset="utf-8" />
+    <link href="css/T.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="js/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+    <section id="page-wrapper">
+        <header id="header">
+            <h1 id="logo" class="animated infinite rubberBand" style="animation-duration: 2s;animation-iteration-count:3"><a href="/">Tranquility</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li>
+                        <a href="/login" class="button special">
+                            Login
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    </section>
+
+    <script>
+        $(function() {
+            $(".close").on('click', function() {
+                $('#addDvice').addClass('hidden');
+            });
+
+            $(".T-RB-Button").on('click', function() {
+                $('#addDvice').removeClass('hidden');
+            });
+
+            $(".close").on('click', function() {
+                $('#tableForm').addClass('hidden');
+            });
+
+            $("#table").on('click', function() {
+                $('#tableForm').removeClass('hidden');
+            });
+        })
+    </script>
+    <link href="../../css/T-c3.css" rel="stylesheet" type="text/css">
+    <script src="../../js/d3.min.js" charset="utf-8"></script>
+    <script src="../../js/c3.min.js" charset="utf-8"></script>
+    <section class="wrapper">
+        <div class="container">
+            <div class="12u">
+                <h3>Breath <i class="fa fa-table" aria-hidden="true"  id="table"></i></h3>
+                <div id="WindChart"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="wrapper">
+        <div class="container">
+            <div class="T-PosterForm hidden">
+                <form action="/T-CreateGroup" method="post" enctype='multipart/form-data'>
+                    <div class="form">
+                        <h2>Add Devices</h2>
+                        <label>Device * <a href=""><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a></label>
+                        <input type="text" name="name" />
+                        <label>Serial Number *</label>
+                        <input type="text" name="name" />
+                        <button class="post">Add</button>
+                        <div class="close" title="close"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="container">
+            <div class="T-PosterForm hidden" id="addDvice">
+                <form action="/T-CreateGroup" method="post" enctype='multipart/form-data'>
+                    <div class="form">
+                        <h2>Add Devices</h2>
+                        <label>Device * <a href=""><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a></label>
+                        <div class="select-wrapper">
+                            <select name="category" id="category">
+                        		<option value="">- Device -</option>
+                        		<option value="1">Breath</option>
+                        		<option value="1">Heartbeat</option>
+                        		<option value="1">Mind</option>
+                        	</select>
+                        </div>
+                        <label>Serial Number *</label>
+                        <input type="text" name="name" />
+                        <button class="post">Add</button>
+                        <div class="close" title="close"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="T-PosterForm hidden" id="tableForm">
+                <div class="form">
+                    <h3>Table</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>CO2</th>
+                                    <th>O2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>12:00</td>
+                                    <td>29.99</td>
+                                    <td>29.99</td>
+                                </tr>
+                                <tr>
+                                    <td>13:00</td>
+                                    <td>29.99</td>
+                                    <td>29.99</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="close" title="close"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="T-RB-Button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    <script>
+        $(document).ready(function() {
+            var WindChart = c3.generate({
+                bindto: '#WindChart',
+                data: {
+                    x: 'x',
+                    columns: [
+                        ['x', '0.89', '1.22', '1.56', '1.89', '2.22', '2.56', '2.89', '3.22', '3.55', '3.89', '4.22', '4.55', '4.89', '5.22', '5.55', '5.89', '6.22', '6.55', '6.89', '7.55'],
+                        ['CO2', 0.00, 0.35, 0.56, 0.89, 1.39, 1.94, 2.47, 3.25, 3.86, 4.32, 4.75, 4.99, 5.02, 4.90, 4.75, 4.72, 4.67, 4.59, 4.41, 4.34, 4.35],
+                        ['O2', 11.22, 11.05, 11.18, 11.79, 12.08, 11.79, 12.10, 12.41, 11.51, 11.79, 12.38, 12.37, 12.06, 12.08, 12.10, 12.71, 12.10, 12.41, 12.12, 12.42, 11.83]
+                    ],
+                    type: 'area-spline'
+                },
+                axis: {
+                    x: {
+                        type: 'category',
+                        categories: [],
+                        tick: {
+                            rotate: 75,
+                            multiline: false
+                        }
+                    },
+                    y: {
+                        label: {
+                            text: '',
+                            position: 'outer-middle'
+                        }
+                    }
+                },
+                color: {
+                    pattern: ['#3cba54', '#4885ed']
+                },
+                point: {
+                    r: 3.5
+                }
+            });
+        });
+    </script>
+    </div>
+    <footer id="footer">
+        <!--
+    <a href="https://flagcounter.webnots.com/details/pv"><img src="https://flagcounter.webnots.com/pv/" alt="Flag Counter" style="max-width: 100%;"></a>
+-->
+        <ul class="icons">
+            <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+        </ul>
+        About: <a href="/tranquility">Tranquility</a>
+        <ul class="copyright">
+            <li>&copy; Untitled. All rights reserved.</li>
+            <li>Design: <a href="/7r4nqu1l17y">7r4nqu1l17y</a></li>
+        </ul>
+    </footer>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109991829-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-109991829-1');
+    </script>
+
+</html>
